@@ -4,9 +4,8 @@
 #include <unistd.h>  //#include <delay.h>
 #include <fcntl.h>
 
-#include <onion-spi.h> /* main SPI functionality */
+#include <wrt-spi.h> /* main SPI functionality */
 #include <ugpio.h> /* for GPIO stuff */
-#include <onion-debug.h> /* debug output */
 
 
 #include <uc1701.h>
