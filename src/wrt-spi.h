@@ -36,7 +36,7 @@
 #define SPI_DEFAULT_GPIO_CS			7
 
 // type definitions
-struct spiParams {
+typedef struct spiParams {
 	int 	busNum;
 	int 	deviceId;
 
@@ -51,7 +51,7 @@ struct spiParams {
 	int 	mosiGpio;
 	int 	misoGpio;
 	int 	csGpio;
-};
+} spiParams;
 
 // for debugging
 #ifndef __APPLE__
@@ -69,22 +69,22 @@ extern "C"{
 
 //// spi functions
 // initialize the spiParams structure to default values
-void 	spiParamInit			(struct spiParams *params);
+void 	spiParamInit			(spiParams *params);
 
 // check if an SPI device is mapped sysfs
-int 	spiCheckDevice 			(int busNum, int devId, int printSeverity);
+int 	spiCheckDevice 			(int busNum, int devId);
 
 // register an SPI device with sysfs
-int 	spiRegisterDevice 		(struct spiParams *params);
+int 	spiRegisterDevice 		(spiParams *params);
 // setup paramaters of the sysfs SPI interface
-int 	spiSetupDevice 			(struct spiParams *params);
+int 	spiSetupDevice 			(spiParams *params);
 
 // transfer data through the SPI interface
-int 	spiTransfer				(struct spiParams *params, uint8_t *txBuffer, uint8_t *rxBuffer, int bytes);
+int 	spiTransfer				(spiParams *params, uint8_t *txBuffer, uint8_t *rxBuffer, int bytes);
 
 
-int 	spiWrite				(struct spiParams *params, int addr, uint8_t *wrBuffer, int bytes);
-int 	spiRead					(struct spiParams *params, int addr, uint8_t *rdBuffer, int bytes);
+int 	spiWrite				(spiParams *params, int addr, uint8_t *wrBuffer, int bytes);
+int 	spiRead					(spiParams *params, int addr, uint8_t *rdBuffer, int bytes);
 
 
 #ifdef __cplusplus

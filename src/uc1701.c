@@ -4,12 +4,12 @@
 #include <unistd.h>  //#include <delay.h>
 #include <fcntl.h>
 
-#include <wrt-spi.h> /* main SPI functionality */
-#include <ugpio.h> /* for GPIO stuff */
+#include "wrt-spi.h" /* main SPI functionality */
+#include "ugpio.h" /* for GPIO stuff */
 
 
-#include <uc1701.h>
-#include <font5x7.h>
+#include "uc1701.h"
+#include "font5x7.h"
 
 
 /* saved gpio pins (freed later) */
@@ -125,7 +125,8 @@ static void UC1701_cmd(uint8_t cmd) {
 	UC1701_SetOutputGPIO(savedRS, 0);
 	//transmit SPI data
 	uint8_t cmdCopy = cmd;
-	dummyRXBuf = 0;
+	uint8_t dummyRXBuf = 0;
+
 	int err = spiTransfer(&params, &cmdCopy, &dummyRXBuf, 1);
 	if(err == EXIT_FAILURE)
 		printf("[-] SPI transfer failed!\n");
@@ -148,7 +149,7 @@ uint16_t RGB565(uint8_t R,uint8_t G,uint8_t B) {
 /*************************************************************************************/
 /*                                     LCD  function                                 */
 /*************************************************************************************/
-void UC1701_Init(void)
+int UC1701_Init(uc1701_initparams_t *initParams)
 {
 	printf("[-] Init function called.\n");
 	//activate debug logging
@@ -177,7 +178,7 @@ void UC1701_Init(void)
 	params.delayInUs = 10;
 
 	//is our device already mapped?
-	err = spiCheckDevice(params.busNum, params.deviceId, ONION_SEVERITY_DEBUG);
+	err = spiCheckDevice(params.busNum, params.deviceId);
 	if(err == EXIT_FAILURE) {
 		printf("[-] spiCheckDevice() failed.\n");
 		return false;
@@ -206,7 +207,7 @@ void UC1701_Init(void)
 		UC1701_InitOutputGPIO(initParams->rst);
 	}
 	//set GPIO for DC (data/command selection, on the board called "RS")
-	savedCS = initParams->cs;
+	savedCs = initParams->cs;
 	UC1701_InitOutputGPIO(initParams->cs);
 	//reset line (optional)
 	if(initParams->cs > 0) {

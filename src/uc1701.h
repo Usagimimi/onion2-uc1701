@@ -43,7 +43,7 @@ extern uint16_t scr_width;
 extern uint16_t scr_height;
 
 
-void UC1701_Init(void);
+int UC1701_Init(uc1701_initparams_t *initParams);
 void UC1701_DeInit(void);
 void UC1701_Contrast(uint8_t res_ratio, uint8_t el_vol);
 void UC1701_SetAllPixelOn(OnOffStatus state);

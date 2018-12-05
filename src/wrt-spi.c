@@ -12,14 +12,14 @@
 int 	_spiGetFd				(int busNum, int devId, int *devHandle);
 int 	_spiReleaseFd			(int devHandle);
 
-int 	_spiRegisterDevice 		(int struct spiParams *params);
+int 	_spiRegisterDevice 		(spiParams *params);
 
 static void hex_dump(const void *src, size_t length, size_t line_size, char *prefix);
 
 
 //// spi functions
 // initialize the parameter structure
-void spiParamInit(struct spiParams *params)
+void spiParamInit(spiParams *params)
 {
 	params->busNum			= 0;
 	params->deviceId		= 0;
@@ -59,7 +59,7 @@ int spiCheckDevice(int busNum, int devId)
 // check if a specific SPI device exists.
 //	if not, register it with sysfs
 // 	if it exists, do nothing
-int spiRegisterDevice (struct spiParams *params)
+int spiRegisterDevice (spiParams *params)
 {
 	int 	status;
 
@@ -85,7 +85,7 @@ int spiRegisterDevice (struct spiParams *params)
 }
 
 // using ioctl, setup parameters of the SPI device interface
-int spiSetupDevice (struct spiParams *params)
+int spiSetupDevice (spiParams *params)
 {
 	int 	status, ret, fd;
 
@@ -146,7 +146,7 @@ int spiSetupDevice (struct spiParams *params)
 }
 
 // perform a transfer
-int spiTransfer(struct spiParams *params, uint8_t *txBuffer, uint8_t *rxBuffer, int bytes)
+int spiTransfer(spiParams *params, uint8_t *txBuffer, uint8_t *rxBuffer, int bytes)
 {
 	int 	status;
 	int 	fd, res;
@@ -155,7 +155,7 @@ int spiTransfer(struct spiParams *params, uint8_t *txBuffer, uint8_t *rxBuffer, 
 	res 	= EXIT_FAILURE;
 
 	// open the file handle
-	status 	= _spiGetFd(params->busNum, params->deviceId, &fd, ONION_SEVERITY_FATAL);
+	status 	= _spiGetFd(params->busNum, params->deviceId, &fd);
 
 	// attempt the SPI transfter
 	if (status == EXIT_SUCCESS) {
@@ -199,7 +199,7 @@ int spiTransfer(struct spiParams *params, uint8_t *txBuffer, uint8_t *rxBuffer, 
 
 		printf_dbg("   Received: 0x%02x, ioctl status: %d\n", *rxBuffer, res);
 
-		if (status == EXIT_SUCCESS && onionGetVerbosity() > ONION_SEVERITY_DEBUG ) {
+		if (status == EXIT_SUCCESS && USE_DEBUG ) {
 			hex_dump(txBuffer, bytes, 32, "TX");
 			hex_dump(rxBuffer, bytes, 32, "RX");
 		}
@@ -211,7 +211,7 @@ int spiTransfer(struct spiParams *params, uint8_t *txBuffer, uint8_t *rxBuffer, 
 	return status;
 }
 
-int spiWrite(struct spiParams *params, int addr, uint8_t *wrBuffer, int bytes)
+int spiWrite(spiParams *params, int addr, uint8_t *wrBuffer, int bytes)
 {
 	int 		status, i;
 	uint8_t 	*txBuffer;
@@ -239,9 +239,9 @@ int spiWrite(struct spiParams *params, int addr, uint8_t *wrBuffer, int bytes)
 	return 	status;
 }
 
-int spiRead(struct spiParams *params, int addr, uint8_t *rdBuffer, int bytes)
+int spiRead(spiParams *params, int addr, uint8_t *rdBuffer, int bytes)
 {
-	int 		status, i;
+	int 		status;
 	uint8_t 	*txBuffer;
 	uint8_t 	*rxBuffer;
 
@@ -297,7 +297,7 @@ int _spiReleaseFd(int devHandle)
 }
 
 // register an SPI device
-int _spiRegisterDevice (struct spiParams *params)
+int _spiRegisterDevice (spiParams *params)
 {
 	int 	status;
 	char 	cmd[256];

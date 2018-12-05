@@ -13,9 +13,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <config.h>
-#include <ugpio.h>
-#include <ugpio-internal.h>
+#include "ugpio.h"
+#include "ugpio-internal.h"
 
 ugpio_t *ugpio_request(unsigned int gpio, const char *label)
 {

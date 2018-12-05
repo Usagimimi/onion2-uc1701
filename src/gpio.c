@@ -13,9 +13,8 @@
 #include <stdio.h>
 #include <errno.h>
 
-#include <config.h>
-#include <ugpio.h>
-#include <ugpio-internal.h>
+#include "ugpio.h"
+#include "ugpio-internal.h"
 
 int gpio_is_requested(unsigned int gpio)
 {

@@ -13,9 +13,8 @@
 #include <string.h>
 #include <errno.h>
 
-#include <config.h>
-#include <ugpio.h>
-#include <ugpio-internal.h>
+#include "ugpio.h"
+#include "ugpio-internal.h"
 
 int gpio_fd_open(unsigned int gpio, const char *key, int flags)
 {

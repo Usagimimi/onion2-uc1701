@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <sys/time.h>
-#include "UC1701.h"
+#include "uc1701.h"
 
 int main()
 {
@@ -15,7 +15,7 @@ int main()
 	srand(time(NULL));
 
 	//GPIO configuration of display
-	UC1701_initparams_t params  = {
+	uc1701_initparams_t params  = {
 		.mosi = 8,	//MOSI
 		.sclk = 7,	//SCLK
 		.cs = 6,	//CS
@@ -31,7 +31,6 @@ int main()
 		return -1;
 	}
 
-	UC1701_Init();
 	UC1701_Contrast(4,24);
 
 	UC1701_Orientation(scr_normal);
