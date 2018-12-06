@@ -244,5 +244,3 @@ ugpio-internal.o: src/ugpio-internal.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/asm/errno.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
  src/ugpio.h src/ugpio-version.h src/ugpio-internal.h
-feature_tests.o: src/CMakeFiles/feature_tests.c \
- /usr/include/stdc-predef.h

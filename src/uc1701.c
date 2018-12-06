@@ -172,9 +172,9 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 	params.sckGpio = initParams->sclk;
 	params.csGpio = initParams->cs;
 	params.speedInHz = initParams->speedInHz;
-	params.modeBits = SPI_MODE_0; //only SPIMODE_0, no dual TX or RX as "default"..
+	params.modeBits = SPI_NO_CS | SPI_MODE_3;
 	params.busNum = 1; //this comes from my local machine. no idea if it works elsewhere.. (ls /dev/spi*)
-	params.deviceId = 32766;
+	params.deviceId = 1;
 	params.delayInUs = 10;
 
 	//is our device already mapped?
