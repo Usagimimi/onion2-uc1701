@@ -1,56 +1,8 @@
-# main compiler
-CC := gcc
+csrc = $(wildcard src/*.c)
+ccsrc = $(wildcard src/*.cpp)
+obj = $(csrc:.c=.o) $(ccsrc:.cpp=.o)
 
-CFLAGS=-c -Wall
+LDFLAGS = 
 
-LDFLAGS := -s
-
-# Here is a simple Make Macro.
-TARGET = main
-SRCDIR = src
-DEPDIR = dep
-OBJDIR = obj
-
-SOURCES := $(wildcard $(SRCDIR)/*.c) \
-			$(wildcard $(SRCDIR)/*/*.c) \
-			$(wildcard $(SRCDIR)/*/*/*.c)
-SRCDIRS := $(sort $(dir $(SOURCES)))
-
-DEPENDS := $(subst $(SRCDIR),$(DEPDIR),$(SOURCES))
-DEPENDS := $(DEPENDS:.c=.d)
-DEPDIRS := $(sort $(dir $(DEPENDS)))
-
-OBJECTS := $(subst $(SRCDIR),$(OBJDIR),$(SOURCES))
-OBJECTS := $(OBJECTS:.c=.o)
-OBJDIRS := $(sort $(dir $(OBJECTS)))
-
-
-.PHONY : all create_dirs depend compile clean
-
-all: $(TARGET)
-
-$(TARGET): $(OBJECTS)
-	$(LD) $(LDFLAGS) -o $@ $(OBJECTS)
-
-$(OBJECTS): create_dirs depend compile
-
-	
-create_dirs:
-	mkdir -p $(DEPDIR) $(OBJDIR)
-	for i in $(DEPDIRS); do mkdir -p $$i; done
-	for i in $(OBJDIRS); do mkdir -p $$i; done
-
-depend:
-	$(CC) -M $(CFLAGS) $(SOURCES) > dependences
-
--include dependences
-
-compile: $(SOURCES)
-	$(CC) -o $@ $^ $(LDFLAGS) 
-
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	$(CC) $(CFLAGS) $< -c -o $@
-
-clean:
-	rm -f .depend *.o
+main: $(obj)
+	$(CXX) -o $@ $^ $(LDFLAGS)
