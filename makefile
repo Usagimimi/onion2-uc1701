@@ -25,14 +25,14 @@ OBJECTS := $(OBJECTS:.c=.o)
 OBJDIRS := $(sort $(dir $(OBJECTS)))
 
 
-.PHONY : all create_dirs depend clean
+.PHONY : all create_dirs depend compile clean
 
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
 	$(LD) $(LDFLAGS) -o $@ $(OBJECTS)
 
-$(OBJECTS): create_dirs depend
+$(OBJECTS): create_dirs depend compile
 
 	
 create_dirs:
@@ -44,6 +44,10 @@ depend:
 	$(CC) -M $(CFLAGS) $(SOURCES) > dependences
 
 -include dependences
+
+compile: $(SOURCES)
+	$(CC) -o $@ $^ $(LDFLAGS) 
+
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) $< -c -o $@
