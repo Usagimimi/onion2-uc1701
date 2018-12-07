@@ -170,7 +170,7 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 	spiParamInit(&params);
 	params.mosiGpio = initParams->mosi;
 	params.sckGpio = initParams->sclk;
-	params.csGpio = 6;//initParams->cs; // don't touch!!!
+	params.csGpio = initParams->cs; // don't touch!!!
 	params.speedInHz = initParams->speedInHz;
 	params.modeBits = SPI_MODE_3;//SPI_3WIRE | SPI_NO_CS | 
 	params.busNum = 1; //this comes from my local machine. no idea if it works elsewhere.. (ls /dev/spi*)
@@ -201,18 +201,15 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 	//set GPIO for DC (data/command selection, on the board called "RS")
 	savedRS = initParams->rs;
 	UC1701_InitOutputGPIO(initParams->rs);
+
 	//reset line (optional)
 	if(initParams->rst > 0) {
 		savedRst = initParams->rst;
 		UC1701_InitOutputGPIO(initParams->rst);
 	}
 	
-	savedCs = initParams->cs;
-	UC1701_InitOutputGPIO(initParams->cs);
-	if(initParams->cs > 0) {
-		savedCs = initParams->cs;
-		UC1701_InitOutputGPIO(initParams->cs);
-	}
+	savedCs = 19; // software CS
+	UC1701_InitOutputGPIO(savedCs);
 
 	//LED line (turn display on/off, optional)
 	if(initParams->led > 0) {
