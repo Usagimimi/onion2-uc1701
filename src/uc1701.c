@@ -121,7 +121,9 @@ static void UC1701_write(uint8_t data)
 		printf("[-] SPI transfer failed!\n");
 }
 
-static void UC1701_cmd(uint8_t cmd) {
+static void UC1701_cmd(uint8_t cmd)
+{
+	UC1701_SetOutputGPIO(savedCS, 0);
 	UC1701_SetOutputGPIO(savedRS, 0);
 	//transmit SPI data
 	uint8_t cmdCopy = cmd;
@@ -129,7 +131,10 @@ static void UC1701_cmd(uint8_t cmd) {
 
 	int err = spiTransfer(&params, &cmdCopy, &dummyRXBuf, 1);
 	if(err == EXIT_FAILURE)
+	{
 		printf("[-] SPI transfer failed!\n");
+	}
+	UC1701_SetOutputGPIO(savedCS, 1);
 }
 
 static void UC1701_cmd_double(uint8_t cmd1, uint8_t cmd2) {
@@ -137,7 +142,8 @@ static void UC1701_cmd_double(uint8_t cmd1, uint8_t cmd2) {
 	UC1701_cmd(cmd2);
 }
 
-static void UC1701_data(uint8_t data) {
+static void UC1701_data(uint8_t data)
+{
 	UC1701_SetOutputGPIO(savedRS, 1);
 	UC1701_write(data);
 }
@@ -238,7 +244,9 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 	UC1701_cmd(0xa2); // Set LCD bias ratio (BR = 0)
 	UC1701_cmd(0xaf); // Display enable
 
-	UC1701_cmd_double(0xfa,0x93); // Advanced program control 0:
+	UC1701_cmd(0xfa); // Set LCD bias ratio (BR = 0)
+	UC1701_cmd(0x93); // Display enable
+	//UC1701_cmd_double(0xfa,0x93); // Advanced program control 0:
 								  //   Temperature compensation -0.11%/C
 								  //   PA wrap around enabled, CA wrap around enabled
 
@@ -382,7 +390,7 @@ void UC1701_Flush(void) {
 		if (scr_orientation == scr_180 || scr_orientation == scr_CCW) UC1701_cmd(0x04); else UC1701_cmd(0x00);
 		UC1701_cmd(0x10); // Column 0 address MSB
 		UC1701_cmd(0xb0 | j); // Page address
-		for (i = 0; i < 128; i++) {
+		for (i = 0; i < SCR_W; i++) {
 			UC1701_data(vRAM[(j * SCR_W) + i]);
 		}
 	}
