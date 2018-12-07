@@ -208,7 +208,7 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 		UC1701_InitOutputGPIO(initParams->rst);
 	}
 	
-	savedCs = 11; // software CS
+	savedCs = 0; // software CS
 	UC1701_InitOutputGPIO(savedCs);
 	UC1701_SetOutputGPIO(savedCs, 0);
 
@@ -232,7 +232,7 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 	}
 
 	usleep(10 * 1000);
-	
+
 	UC1701_cmd(0xe2); // Software system reset
 	UC1701_cmd(0x2f); // Power control: Boost ON,  V.Regular ON,  V.Follower ON
 	UC1701_cmd(0xa2); // Set LCD bias ratio (BR = 0)
