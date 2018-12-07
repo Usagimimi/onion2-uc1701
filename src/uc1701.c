@@ -123,7 +123,7 @@ static void UC1701_write(uint8_t data)
 
 static void UC1701_cmd(uint8_t cmd)
 {
-	UC1701_SetOutputGPIO(savedCS, 0);
+	UC1701_SetOutputGPIO(savedCs, 0);
 	UC1701_SetOutputGPIO(savedRS, 0);
 	//transmit SPI data
 	uint8_t cmdCopy = cmd;
@@ -134,7 +134,7 @@ static void UC1701_cmd(uint8_t cmd)
 	{
 		printf("[-] SPI transfer failed!\n");
 	}
-	UC1701_SetOutputGPIO(savedCS, 1);
+	UC1701_SetOutputGPIO(savedCs, 1);
 }
 
 static void UC1701_cmd_double(uint8_t cmd1, uint8_t cmd2) {
