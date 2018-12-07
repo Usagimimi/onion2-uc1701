@@ -244,8 +244,6 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 	UC1701_cmd(0xa2); // Set LCD bias ratio (BR = 0)
 	UC1701_cmd(0xaf); // Display enable
 
-	UC1701_cmd(0xfa); // Set LCD bias ratio (BR = 0)
-	UC1701_cmd(0x93); // Display enable
 	//UC1701_cmd_double(0xfa,0x93); // Advanced program control 0:
 								  //   Temperature compensation -0.11%/C
 								  //   PA wrap around enabled, CA wrap around enabled
