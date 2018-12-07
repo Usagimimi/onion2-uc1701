@@ -208,7 +208,7 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 		UC1701_InitOutputGPIO(initParams->rst);
 	}
 	
-	savedCs = 19; // software CS
+	savedCs = 11; // software CS
 	UC1701_InitOutputGPIO(savedCs);
 
 	//LED line (turn display on/off, optional)
