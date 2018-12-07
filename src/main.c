@@ -18,7 +18,7 @@ int main()
 	uc1701_initparams_t params  = {
 		.mosi = 8,	//MOSI
 		.sclk = 7,	//SCLK
-		.cs = 6,	//CS
+		.cs = 19,	//CS
 		.led = -1,	//LED backlight (unused)
 		.rst = 3,	//reset
 		.rs = 1,	//D/C
@@ -34,7 +34,7 @@ int main()
 	UC1701_Contrast(4,24);
 
 	UC1701_Orientation(scr_normal);
-	UC1701_Fill(0xFF);
+	UC1701_Fill(0xAA);
 
 	UC1701_Flush();
 
