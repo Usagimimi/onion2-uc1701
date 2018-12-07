@@ -170,7 +170,7 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 	spiParamInit(&params);
 	params.mosiGpio = initParams->mosi;
 	params.sckGpio = initParams->sclk;
-	params.csGpio = initParams->cs; // don't touch!!!
+	//params.csGpio = initParams->cs; // don't touch!!!
 	params.speedInHz = initParams->speedInHz;
 	params.modeBits = SPI_MODE_3;//SPI_3WIRE | SPI_NO_CS | 
 	params.busNum = 1; //this comes from my local machine. no idea if it works elsewhere.. (ls /dev/spi*)
