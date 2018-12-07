@@ -210,6 +210,7 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 	
 	savedCs = 11; // software CS
 	UC1701_InitOutputGPIO(savedCs);
+	UC1701_SetOutputGPIO(savedCs, 0);
 
 	//LED line (turn display on/off, optional)
 	if(initParams->led > 0) {
@@ -217,14 +218,16 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 		UC1701_InitOutputGPIO(initParams->led);
 	}
 
+	usleep(10 * 1000);
+	
 	//pulse reset pin
 	if(initParams->rst > 0)
 	{
 		UC1701_SetOutputGPIO(savedCs, 1);
 		UC1701_SetOutputGPIO(savedRst, 0);
-		usleep(1 * 1000);					 // Must hold RST low at least 1ms
+		usleep(2 * 1000);					 // Must hold RST low at least 1ms
 		UC1701_SetOutputGPIO(savedRst, 1);
-		usleep(5 * 1000);					 // Wait at least 5ms
+		usleep(6 * 1000);					 // Wait at least 5ms
 		UC1701_SetOutputGPIO(savedCs, 0);
 	}
 
