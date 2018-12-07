@@ -209,7 +209,6 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 	
 	savedCs = initParams->cs;
 	UC1701_InitOutputGPIO(initParams->cs);
-	reset line (optional)
 	if(initParams->cs > 0) {
 		savedCs = initParams->cs;
 		UC1701_InitOutputGPIO(initParams->cs);
