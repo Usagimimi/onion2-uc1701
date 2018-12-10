@@ -15,7 +15,6 @@ typedef struct {
 
 typedef enum {ON = 0, OFF = !ON} OnOffStatus;
 typedef enum {NORMAL = 0, INVERT = !NORMAL} InvertStatus;
-typedef enum {ENABLED = 0, DISABLED = !ENABLED} DisplayState;
 
 // Screen dimensions
 #define  SCR_W 132
@@ -78,10 +77,13 @@ extern uint16_t scr_height;
 
 int UC1701_Init(uc1701_initparams_t *initParams);
 void UC1701_DeInit(void);
+void UC1701_Reset(void);
+void UC1701_BiasRatio(UC1701BiasRatio ratio);
+void UC1701_SetDisplayState(UC1701Enable state);
 void UC1701_Contrast(uint8_t res_ratio, uint8_t el_vol);
+void UC1701_PowerControl(bool isXv0Enable, bool isV0Enable, bool isVgEnable);
 void UC1701_SetAllPixelOn(OnOffStatus state);
 void UC1701_SetInvert(InvertStatus state);
-void UC1701_SetDisplayState(DisplayState state);
 void UC1701_SetXDir(InvertStatus MX);
 void UC1701_SetYDir(InvertStatus MY);
 void UC1701_SetAddr(uint8_t X, uint8_t Y);

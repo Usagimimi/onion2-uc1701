@@ -249,7 +249,8 @@ int UC1701_Init(uc1701_initparams_t *initParams)
     UC1701_Contrast(4, 34 + 10);
 }
 
-void UC1701_DeInit() {
+void UC1701_DeInit(void)
+{
 	//free GPIOs
 	UC1701_FreeGPIOs();
 	//free SPI bus
@@ -257,9 +258,28 @@ void UC1701_DeInit() {
 
 // Reset display registers
 // Doesn't affect the display memory
-void UC1701_Reset(void) {
+void UC1701_Reset(void)
+{
 	UC1701_SetOutputGPIO(savedCs, 0);
 	UC1701_cmd(0xe2);
+	UC1701_SetOutputGPIO(savedCs, 1);
+}
+
+void UC1701_BiasRatio(UC1701BiasRatio ratio)
+{
+    UC1701_SetOutputGPIO(savedCs, 0);
+    UC1701_cmd(0xA2 | (0x01 & (uint8_t)ratio));
+    UC1701_SetOutputGPIO(savedCs, 1);
+}
+
+// Toggle display on/off
+// Input:
+//   state: ENABLED or DISABLED
+// Doesn't affect the display memory
+void UC1701_SetDisplayState(UC1701Enable state)
+{
+	UC1701_SetOutputGPIO(savedCs, 0);
+	UC1701_cmd(state == UC1701Enable_On ? 0xaf : 0xae);
 	UC1701_SetOutputGPIO(savedCs, 1);
 }
 
@@ -272,6 +292,19 @@ void UC1701_Contrast(uint8_t res_ratio, uint8_t el_vol) {
 	UC1701_cmd(0x20 | (res_ratio & 0x07));
 	UC1701_cmd_double(0x81,el_vol & 0x3f);
 	UC1701_SetOutputGPIO(savedCs, 1);
+}
+
+void UC1701_PowerControl(bool isXv0Enable, bool isV0Enable, bool isVgEnable)
+{
+    uint8_t value = 0;
+    if (isXv0Enable)
+        value |= (1 << 2);
+    if (isV0Enable)
+        value |= (1 << 1);
+    if (isVgEnable)
+        value |= (1 << 0);
+        
+    UC1701_cmd(0x28 | value);
 }
 
 // Set all LCD pixels on or off
@@ -290,16 +323,6 @@ void UC1701_SetAllPixelOn(OnOffStatus state) {
 void UC1701_SetInvert(InvertStatus state) {
 	UC1701_SetOutputGPIO(savedCs, 0);
 	UC1701_cmd(state == NORMAL ? 0xa6 : 0xa7);
-	UC1701_SetOutputGPIO(savedCs, 1);
-}
-
-// Toggle display on/off
-// Input:
-//   state: ENABLED or DISABLED
-// Doesn't affect the display memory
-void UC1701_SetDisplayState(DisplayState state) {
-	UC1701_SetOutputGPIO(savedCs, 0);
-	UC1701_cmd(state == ENABLED ? 0xaf : 0xae);
 	UC1701_SetOutputGPIO(savedCs, 1);
 }
 
