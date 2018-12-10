@@ -1,0 +1,7 @@
+main
+src/gpio.o
+src/main.o
+src/ugpio.o
+src/ugpio-internal.o
+src/wrt-spi.o
+src/uc1701.o
