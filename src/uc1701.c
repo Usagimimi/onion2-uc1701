@@ -123,7 +123,7 @@ static void UC1701_write(uint8_t data)
 
 static void UC1701_cmd(uint8_t cmd)
 {
-	UC1701_SetOutputGPIO(savedCs, 0);
+	//UC1701_SetOutputGPIO(savedCs, 0);
 	UC1701_SetOutputGPIO(savedRS, 0);
 	//transmit SPI data
 	uint8_t cmdCopy = cmd;
@@ -134,7 +134,7 @@ static void UC1701_cmd(uint8_t cmd)
 	{
 		printf("[-] SPI transfer failed!\n");
 	}
-	UC1701_SetOutputGPIO(savedCs, 1);
+	//UC1701_SetOutputGPIO(savedCs, 1);
 }
 
 static void UC1701_cmd_double(uint8_t cmd1, uint8_t cmd2) {
@@ -234,21 +234,19 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 		usleep(2 * 1000);					 // Must hold RST low at least 1ms
 		UC1701_SetOutputGPIO(savedRst, 1);
 		usleep(6 * 1000);					 // Wait at least 5ms
-		UC1701_SetOutputGPIO(savedCs, 0);
 	}
 
-	usleep(10 * 1000);
+	//usleep(10 * 1000);
 
-	UC1701_cmd(0xe2); // Software system reset
-	UC1701_cmd(0x2f); // Power control: Boost ON,  V.Regular ON,  V.Follower ON
-	UC1701_cmd(0xa2); // Set LCD bias ratio (BR = 0)
-	UC1701_cmd(0xaf); // Display enable
-
-	//UC1701_cmd_double(0xfa,0x93); // Advanced program control 0:
-								  //   Temperature compensation -0.11%/C
-								  //   PA wrap around enabled, CA wrap around enabled
-
+	UC1701_Reset();
+	UC1701_SetOutputGPIO(savedCs, 0);
+	Display_UC1701_PowerControl(true, true, true); //UC1701_cmd(0x2f); // Power control: Boost ON,  V.Regular ON,  V.Follower ON
 	UC1701_SetOutputGPIO(savedCs, 1);
+
+    Display_UC1701_BiasRatio(UC1701BiasRatio_0);
+    Display_UC1701_SetDisplayState(UC1701Enable_On);
+    Display_UC1701_Orientation(UC1701Orientation_Normal);
+    Display_UC1701_Contrast(4, 34 + 10);
 }
 
 void UC1701_DeInit() {

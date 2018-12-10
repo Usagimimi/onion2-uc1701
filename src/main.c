@@ -22,7 +22,7 @@ int main()
 		.led = -1,	//LED backlight (unused)
 		.rst = 3,	//reset
 		.rs = 1,	//D/C
-		.speedInHz = 500000 
+		.speedInHz = 1000000 
 	};
 
 	bool initOkay = UC1701_Init(&params);

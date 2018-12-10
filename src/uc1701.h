@@ -21,6 +21,39 @@ typedef enum {ENABLED = 0, DISABLED = !ENABLED} DisplayState;
 #define  SCR_W 132
 #define  SCR_H 64
 
+typedef enum 
+{
+    UC1701OnOffStatus_On = 0, 
+    UC1701OnOffStatus_Off = !UC1701OnOffStatus_On
+} UC1701OnOffStatus;
+
+typedef enum 
+{
+    UC1701Invert_Normal = 0, 
+    UC1701Invert_Invert = !UC1701Invert_Normal
+} UC1701Invert;
+
+
+typedef enum
+{
+    UC1701BiasRatio_0 = 0,
+    UC1701BiasRatio_1 = 1,
+}UC1701BiasRatio;
+
+typedef enum 
+{
+    UC1701Enable_On = 0, 
+    UC1701Enable_Off = !UC1701Enable_On
+} UC1701Enable;
+
+
+typedef enum {
+	UC1701Orientation_Normal = 0,
+	UC1701Orientation_Cw     = 1,
+	UC1701Orientation_Ccw    = 2,
+	UC1701Orientation_180    = 3
+} UC1701Orientation;
+
 typedef enum {
 	transparent  = 0,
 	opaque       = 1
