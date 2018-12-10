@@ -240,13 +240,13 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 
 	UC1701_Reset();
 	UC1701_SetOutputGPIO(savedCs, 0);
-	Display_UC1701_PowerControl(true, true, true); //UC1701_cmd(0x2f); // Power control: Boost ON,  V.Regular ON,  V.Follower ON
+	UC1701_PowerControl(true, true, true); //UC1701_cmd(0x2f); // Power control: Boost ON,  V.Regular ON,  V.Follower ON
 	UC1701_SetOutputGPIO(savedCs, 1);
 
-    Display_UC1701_BiasRatio(UC1701BiasRatio_0);
-    Display_UC1701_SetDisplayState(UC1701Enable_On);
-    Display_UC1701_Orientation(UC1701Orientation_Normal);
-    Display_UC1701_Contrast(4, 34 + 10);
+    UC1701_BiasRatio(UC1701BiasRatio_0);
+    UC1701_SetDisplayState(UC1701Enable_On);
+    UC1701_Orientation(UC1701Orientation_Normal);
+    UC1701_Contrast(4, 34 + 10);
 }
 
 void UC1701_DeInit() {
