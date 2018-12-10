@@ -96,8 +96,8 @@ static void UC1701_FreeGPIOs()
 
 	if(savedCs != -1)
 	{
-		gpio_free(savedRst);
-		savedRst = -1;
+		gpio_free(savedCs);
+		savedCs = -1;
 	}
 
 	if(savedLED != -1)
