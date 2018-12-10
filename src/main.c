@@ -31,10 +31,10 @@ int main()
 		return -1;
 	}
 
-	UC1701_Contrast(4,44);
+	//UC1701_Contrast(4,44);
 
-	UC1701_Orientation(scr_normal);
-	UC1701_Fill(0xAA);
+	//UC1701_Orientation(scr_normal);
+	UC1701_Fill(0x00);
 
 	UC1701_Flush();
 
