@@ -205,20 +205,20 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 	}
 
 	//set GPIO for DC (data/command selection, on the board called "RS")
-	if(initParams->rs > 0)
+	if(initParams->rs >= 0)
 	{
 		savedRS = initParams->rs;
 		UC1701_InitOutputGPIO(initParams->rs);
 	}
 
 	//reset line (optional)
-	if(initParams->rst > 0)
+	if(initParams->rst >= 0)
 	{
 		savedRst = initParams->rst;
 		UC1701_InitOutputGPIO(initParams->rst);
 	}
 	
-	if(initParams->cs_s > 0)
+	if(initParams->cs_s >= 0)
 	{
 		savedCs = initParams->cs_s; // software CS
 		UC1701_InitOutputGPIO(savedCs);
@@ -226,7 +226,7 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 	}
 
 	//LED line (turn display on/off, optional)
-	if(initParams->led > 0) {
+	if(initParams->led >= 0) {
 		savedLED = initParams->led;
 		UC1701_InitOutputGPIO(initParams->led);
 	}
@@ -234,7 +234,7 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 	usleep(10 * 1000);
 
 	//pulse reset pin
-	if(initParams->rst > 0)
+	if(initParams->rst >= 0)
 	{
 		UC1701_SetOutputGPIO(savedCs, 1);
 		UC1701_SetOutputGPIO(savedRst, 0);
