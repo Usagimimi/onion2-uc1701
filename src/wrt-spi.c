@@ -1,6 +1,6 @@
 #include "wrt-spi.h"
 
-#define USE_DEBUG	1
+#define USE_DEBUG	0
 
 #if USE_DEBUG
 #define    printf_dbg(...)    printf(__VA_ARGS__)

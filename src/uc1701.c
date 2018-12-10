@@ -287,7 +287,8 @@ void UC1701_SetDisplayState(UC1701Enable state)
 // Input:
 //   res_ratio: internal resistor ratio [0..7], power on value is 4
 //   el_vol: electronic volume [0..63], power on value is 32
-void UC1701_Contrast(uint8_t res_ratio, uint8_t el_vol) {
+void UC1701_Contrast(uint8_t res_ratio, uint8_t el_vol)
+{
 	UC1701_SetOutputGPIO(savedCs, 0);
 	UC1701_cmd(0x20 | (res_ratio & 0x07));
 	UC1701_cmd_double(0x81,el_vol & 0x3f);
