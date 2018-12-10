@@ -10,8 +10,8 @@ int main(int argc, char * argv[])
 {
 
 	int i;
-	uint8_t pattern = 0;
-	uint8_t contrsat = 5;
+	int pattern = 0;
+	int contrast = 5;
 
 	for( i = 0 ; i < argc; i++) {
 			printf("Argument %d: %s\n", i, argv[i]);
@@ -25,7 +25,7 @@ int main(int argc, char * argv[])
 	if(argc == 3)
 	{
 		sscanf(argv[1], "%d", &pattern);
-		sscanf(argv[2], "%d", &contrsat);
+		sscanf(argv[2], "%d", &contrast);
 	}
 
 	printf("Testing UC1701 driver now.\n");
