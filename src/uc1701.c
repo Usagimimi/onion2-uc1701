@@ -254,6 +254,8 @@ int UC1701_Init(uc1701_initparams_t *initParams)
     UC1701_SetDisplayState(UC1701Enable_On);
     UC1701_Orientation(UC1701Orientation_Normal);
     UC1701_Contrast(4, 34 + 5);
+
+	return true;
 }
 
 void UC1701_DeInit(void)

@@ -42,10 +42,10 @@ int main(int argc, char * argv[])
 	};
 
 	bool initOkay = UC1701_Init(&params);
-	//if(!initOkay) {
-	//	printf("[-] Failed to initialize UC1701 display!\n");
-	//	return -1;
-	//}
+	if(!initOkay) {
+		printf("[-] Failed to initialize UC1701 display!\n");
+		return -1;
+	}
 
 	//UC1701_Contrast(4,44);
 	//UC1701_Orientation(scr_normal);
