@@ -13,10 +13,6 @@ int main(int argc, char * argv[])
 	int pattern = 0;
 	int contrast = 5;
 
-	for( i = 0 ; i < argc; i++) {
-			printf("Argument %d: %s\n", i, argv[i]);
-	}
-
 	if(argc == 2)
 	{
 		sscanf(argv[1], "%d", &pattern);
@@ -37,7 +33,8 @@ int main(int argc, char * argv[])
 	uc1701_initparams_t params  = {
 		.mosi = 8,	//MOSI
 		.sclk = 7,	//SCLK
-		.cs = 6,	//CS
+		.cs_h = 6,	//CS
+		.cs_s = 0,	//CS
 		.led = -1,	//LED backlight (unused)
 		.rst = 3,	//reset
 		.rs = 1,	//D/C

@@ -8,7 +8,7 @@
 /* structure for initialization paramters */
 typedef struct {
 	//pins
-	int mosi, sclk, cs, rst, rs, led;
+	int mosi, sclk, cs_h, cs_s, rst, rs, led;
 	//speed
 	int speedInHz;
 } uc1701_initparams_t;

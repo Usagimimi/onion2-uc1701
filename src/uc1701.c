@@ -167,7 +167,7 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 		return false;
 
 	//check if all required GPIOs are set
-	if(initParams->cs < 0 || initParams->mosi < 0 || initParams->sclk < 0 || initParams->rs < 0) {
+	if(initParams->cs_s < 0 || initParams->mosi < 0 || initParams->sclk < 0 || initParams->rs < 0) {
 		printf("[-] Required GPIO pin not set.\n");
 		return false;
 	}
@@ -205,18 +205,25 @@ int UC1701_Init(uc1701_initparams_t *initParams)
 	}
 
 	//set GPIO for DC (data/command selection, on the board called "RS")
-	savedRS = initParams->rs;
-	UC1701_InitOutputGPIO(initParams->rs);
+	if(initParams->rs > 0)
+	{
+		savedRS = initParams->rs;
+		UC1701_InitOutputGPIO(initParams->rs);
+	}
 
 	//reset line (optional)
-	if(initParams->rst > 0) {
+	if(initParams->rst > 0)
+	{
 		savedRst = initParams->rst;
 		UC1701_InitOutputGPIO(initParams->rst);
 	}
 	
-	savedCs = 0; // software CS
-	UC1701_InitOutputGPIO(savedCs);
-	UC1701_SetOutputGPIO(savedCs, 0);
+	if(initParams->cs_s > 0)
+	{
+		savedCs = initParams->cs_s; // software CS
+		UC1701_InitOutputGPIO(savedCs);
+		UC1701_SetOutputGPIO(savedCs, 0);
+	}
 
 	//LED line (turn display on/off, optional)
 	if(initParams->led > 0) {
